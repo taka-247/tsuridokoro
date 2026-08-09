@@ -1,23 +1,31 @@
-# 
+#
 # timing: on push to main
-# features: build + publish to Pages
-# TODO: now only frontend is deployed to Github Pages. Sort out backend in some way
-# 
+# features: build frontend + deploy to Cloudflare Pages (direct upload via wrangler)
+# note: backend (Express) is deployed separately on Render
+#
 name: Deploy
 on:
   push: { branches: [main] }
-permissions: { pages: write, id-token: write }
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: github-pages
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 24, cache: npm }
       - run: npm ci
-      - run: npm run share
-      - run: GITHUB_PAGES=true npm run build --workspace=frontend
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: frontend/dist }
-      - uses: actions/deploy-pages@v4
+      - run: npm run share                       # build shared first
+      # No GITHUB_PAGES flag -> Vite base stays '/', correct for Cloudflare's root domain
+      - run: npm run build --workspace=frontend
+        env:
+          # Baked into the client at build time. Point this at your Render backend
+          # (add it under Settings > Secrets and variables > Actions). Safe to leave
+          # empty until the backend is wired up.
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # --project-name must match the Pages project you create in the dashboard/CLI
+          command: pages deploy frontend/dist --project-name=tsuridokoro --branch=main
