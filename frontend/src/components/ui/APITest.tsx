@@ -12,9 +12,10 @@ export default function APITest({ ...props }: Props) {
 
   async function handleAPITest() {
     try {
-      const { data } = await myAxios.get(Shared.api.test.url);
-      console.dir('data')
-      console.dir(data)
+      const apiData = await myAxios.get(Shared.api.test.url);
+      const data = apiData.data
+      console.dir('apiData')
+      console.dir(apiData)
       addToast(data.message, 'success')
       setMessage(Shared.api.test.successMessage)
     } catch (err) {
