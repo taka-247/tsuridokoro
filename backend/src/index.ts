@@ -1,2 +1,5 @@
 import { app } from './app'
-app.listen(3001, () => console.log('Backend running on http://localhost:3001'))
+
+// Render (and most hosts) inject PORT; fall back to 3001 for local dev.
+const port = Number(process.env.PORT) || 3001
+app.listen(port, () => console.log(`Backend running on port ${port}`))

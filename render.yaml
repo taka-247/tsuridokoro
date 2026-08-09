@@ -1,0 +1,20 @@
+# Render Blueprint — backend (Express) as a Web Service.
+# Docs: https://render.com/docs/blueprint-spec
+# The frontend is hosted separately on Cloudflare Pages (not here).
+services:
+  - type: web
+    name: tsuridokoro-backend
+    runtime: node
+    region: singapore            # closest Render region to Japan
+    plan: free                   # sleeps after inactivity; upgrade when validating with users
+    rootDir: .                   # repo root — required for npm workspaces (@app/shared)
+    buildCommand: npm ci && npm run share && npm run build --workspace=backend
+    startCommand: npm run start --workspace=backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: ALLOWED_ORIGIN
+        value: https://tsuridokoro.pages.dev   # your Cloudflare Pages origin
+      - key: GEMINI_API_KEY
+        sync: false              # secret — set its value in the Render dashboard

@@ -10,4 +10,9 @@ router.get('/', (_req, res) => {
   res.json({ status: 'ok' })
 })
 
+// Render health check target
+router.get('/health', (_req, res) => {
+  res.json({ status: 'ok' })
+})
+
 export default router
