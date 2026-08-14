@@ -25,7 +25,11 @@ export default function ThemeModeSwitcher({ ...props }: Props) {
   return (
     <button
       onClick={() => toggleTheme()}
-      className="px-3 py-2 rounded border border-border hover:bg-gray-200 hover:text-primary transition-colors cursor-pointer"
+      className={`px-3 py-2 rounded-lg border transition-colors cursor-pointer ${
+        isDark
+          ? 'border-fg text-fg hover:bg-foam'          // dark mode — as-is (your approved look)
+          : 'border-white text-white hover:bg-white/10' // light mode — white on the dark header
+      }`}
       {...props}
     >
       {isDark ? '☀️ Light mode' : '🌙 Dark mode'}

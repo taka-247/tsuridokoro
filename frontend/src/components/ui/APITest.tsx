@@ -32,7 +32,7 @@ export default function APITest({ ...props }: Props) {
           <p className="mb-2">{message}</p>
         )
       }
-      <Button onClick={() => handleAPITest()}>{Shared.pages.dashboard.buttonText}</Button>
+      <Button onClick={() => handleAPITest()}>{Shared.test.buttonText}</Button>
     </div>
   );
 }

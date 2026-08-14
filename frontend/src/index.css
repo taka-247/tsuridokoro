@@ -1,215 +1,97 @@
 @import "tailwindcss";
 
+/* ── Sonar tokens → Tailwind utilities ───────────────────────────────
+   Neutral roles (page/surface/fg/muted/faint/line/shadow/foam) switch
+   with the theme; brand colors (aqua/signal/ink/tide/…) are fixed.
+   Usage: bg-page bg-surface text-fg text-muted border-line
+          bg-aqua bg-signal text-aqua font-data rounded-card shadow-card
+*/
 @theme inline {
-  --color-primary: var(--color-primary-val);
-  --color-secondary: var(--color-secondary-val);
-  --color-third: var(--color-third-val);
-  --color-fourth: var(--color-fourth-val);
-  --color-accent: var(--color-accent-val);
-  --color-border: var(--color-border-val);
-  --color-text: var(--color-text-val);
-  --color-text-inactive: var(--color-text-inactive-val);
-  --color-bg: var(--color-bg-val);
-  --color-error: #ef4444;
-  --color-warn: #ffc400;
-  --color-shadow: var(--color-shadow-val);
+  /* Type */
+  --font-sans: 'Zen Kaku Gothic New', ui-sans-serif, system-ui, sans-serif;
+  --font-data: 'Space Grotesk', ui-monospace, monospace;
+
+  /* Brand — fixed in both modes */
+  --color-ink: #08283a;
+  --color-abyss: #0a2e44;
+  --color-tide: #0e5a7d;
+  --color-aqua: #27c4d9;
+  --color-aqua-deep: #159ab0;
+  --color-signal: #ff7a4d;
+  --color-signal-deep: #e85a2c;
+  --color-amber: #fbb03b;
+  --color-success: #2e9e5b;
+  --color-warn: #f5a524;
+  --color-error: #e5484d;
+
+  /* Neutral roles — switch with theme (values defined below) */
+  --color-page: var(--c-page);
+  --color-surface: var(--c-surface);
+  --color-foam: var(--c-foam);
+  --color-fg: var(--c-fg);
+  --color-muted: var(--c-muted);
+  --color-faint: var(--c-faint);
+  --color-line: var(--c-line);
+  --color-line-strong: var(--c-line-strong);
+
+  /* Radius / shadow */
+  --radius-card: 16px;
+  --shadow-card: var(--c-shadow-card);
 }
 
+/* Light (default) */
 :root {
-  /* Light values */
-  --color-light-primary: #ffffff;
-  --color-light-secondary: #bae6fd;
-  --color-light-third: #7dd3fc;
-  --color-light-fourth: #2dd4bf;
-  --color-light-accent: #aa3bff;
-  --color-light-border: #e5e7eb;
-  --color-light-text: #16171d;
-  --color-light-text-inactive: #505469;
-  --color-light-bg: #16171d;
-  --color-light-shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  /* Dark values */
-  --color-dark-primary: #16171d;
-  --color-dark-secondary: #252630;
-  --color-dark-third: #414354;
-  --color-dark-fourth: #5a5d74;
-  --color-dark-accent: #c084fc;
-  --color-dark-border: #2e303a;
-  --color-dark-text: #f3f4f6;
-  --color-dark-text-inactive: #9ca2ad;
-  --color-dark-bg: #f3f4f6;
-  --color-dark-shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  /* Light mode values */
-  --color-primary-val: var(--color-light-primary);
-  --color-secondary-val: var(--color-light-secondary);
-  --color-third-val: var(--color-light-third);
-  --color-fourth-val: var(--color-light-fourth);
-  --color-accent-val: var(--color-light-accent);
-  --color-border-val: var(--color-light-border);
-  --color-text-val: var(--color-light-text);
-  --color-text-inactive-val: var(--color-light-text-inactive);
-  --color-bg-val: var(--color-light-bg);
-  --color-shadow-val: var(--color-light-shadow);
-
-  &[data-theme="dark"] {
-    --color-primary-val: var(--color-dark-primary);
-    --color-secondary-val: var(--color-dark-secondary);
-    --color-third-val: var(--color-dark-third);
-    --color-fourth-val: var(--color-dark-fourth);
-    --color-accent-val: var(--color-dark-accent);
-    --color-border-val: var(--color-dark-border);
-    --color-text-val: var(--color-dark-text);
-    --color-text-inactive-val: var(--color-dark-text-inactive);
-    --color-bg-val: var(--color-dark-bg);
-    --color-shadow-val: var(--color-dark-shadow);
-  }
-
-  &[data-theme="light"] {
-    --color-primary-val: var(--color-light-primary);
-    --color-secondary-val: var(--color-light-secondary);
-    --color-third-val: var(--color-light-third);
-    --color-fourth-val: var(--color-light-fourth);
-    --color-accent-val: var(--color-light-accent);
-    --color-border-val: var(--color-light-border);
-    --color-text-val: var(--color-light-text);
-    --color-text-inactive-val: var(--color-light-text-inactive);
-    --color-bg-val: var(--color-light-bg);
-    --color-shadow-val: var(--color-light-shadow);
-  }
+  --c-page: #edf3f5;
+  --c-surface: #ffffff;
+  --c-foam: #eaf6f8;
+  --c-fg: #0e2632;
+  --c-muted: #57707e;
+  --c-faint: #93a6b0;
+  --c-line: #e1e9ed;
+  --c-line-strong: #cbd7dd;
+  --c-shadow-card: 0 12px 34px -14px rgba(8, 40, 58, 0.22);
 }
 
+/* Dark — explicit toggle */
+:root[data-theme="dark"] {
+  --c-page: #0b1b26;
+  --c-surface: #12242f;
+  --c-foam: #0f2a35;
+  --c-fg: #eaf2f5;
+  --c-muted: #9fb4be;
+  --c-faint: #6e8794;
+  --c-line: #223038;
+  --c-line-strong: #33454f;
+  --c-shadow-card: 0 14px 40px -16px rgba(0, 0, 0, 0.55);
+}
+
+/* Dark — follow system unless the user forced light */
 @media (prefers-color-scheme: dark) {
-  :root {
-    /* Dark mode values */
-    --color-primary-val: var(--color-dark-primary);
-    --color-secondary-val: var(--color-dark-secondary);
-    --color-third-val: var(--color-dark-third);
-    --color-fourth-val: var(--color-dark-fourth);
-    --color-accent-val: var(--color-dark-accent);
-    --color-border-val: var(--color-dark-border);
-    --color-text-val: var(--color-dark-text);
-    --color-text-inactive-val: var(--color-dark-text-inactive);
-    --color-bg-val: var(--color-dark-bg);
-    --color-shadow-val: var(--color-dark-shadow);
-
-    [data-theme="light"] {
-      --color-primary-val: var(--color-light-primary);
-      --color-secondary-val: var(--color-light-secondary);
-      --color-third-val: var(--color-light-third);
-      --color-fourth-val: var(--color-light-fourth);
-      --color-accent-val: var(--color-light-accent);
-      --color-border-val: var(--color-light-border);
-      --color-text-val: var(--color-light-text);
-      --color-text-inactive-val: var(--color-light-inactive-text);
-      --color-bg-val: var(--color-light-bg);
-      --color-shadow-val: var(--color-light-shadow);
-    }
+  :root:not([data-theme="light"]) {
+    --c-page: #0b1b26;
+    --c-surface: #12242f;
+    --c-foam: #0f2a35;
+    --c-fg: #eaf2f5;
+    --c-muted: #9fb4be;
+    --c-faint: #6e8794;
+    --c-line: #223038;
+    --c-line-strong: #33454f;
+    --c-shadow-card: 0 14px 40px -16px rgba(0, 0, 0, 0.55);
   }
 }
 
-:root {
-  --text: var(--color-text);
-  --bg: var(--color-primary);
-  --border: var(--color-border);
-  --accent: var(--color-accent);
-  --shadow: var(--color-shadow);
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: var(--color-text);
-    --bg: var(--color-primary);
-    --border: var(--color-border);
-    --accent: var(--color-accent);
-    --shadow: var(--color-shadow);
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-/* Wrap with @layer base so that tailwind css defined in a component file is applied */
 @layer base {
-
-  h1,
-  h2 {
-    font-family: var(--heading);
-    font-weight: 500;
-    color: var(--text-h);
+  html {
+    color-scheme: light dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-
-  h1 {
-    font-size: 56px;
-    letter-spacing: -1.68px;
-    margin: 32px 0;
-
-    @media (max-width: 1024px) {
-      font-size: 36px;
-      margin: 20px 0;
-    }
-  }
-
-  h2 {
-    font-size: 24px;
-    line-height: 118%;
-    letter-spacing: -0.24px;
-    margin: 0 0 8px;
-
-    @media (max-width: 1024px) {
-      font-size: 20px;
-    }
-  }
-
-  p {
+  body {
     margin: 0;
+    min-height: 100svh;
+    background: var(--color-page);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
   }
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }
