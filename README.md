@@ -104,6 +104,17 @@ React Hook Form + `zodResolver` using schemas from `@app/shared`. The backend va
 - **Backend** — Vitest + Supertest against the `app` export.
 - **E2E** — Playwright in `frontend/tests/`; config auto-starts both dev servers.
 
+## Deployment
+
+- frontend
+    - Cloudflare Pages
+- backend
+    - Render Web Service
+
+## LLM (Web Search)
+
+- Gemini API
+
 ## CI/CD (GitHub Actions)
 
 | Workflow | Trigger | Does |
