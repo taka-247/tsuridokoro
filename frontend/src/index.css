@@ -95,3 +95,20 @@
     font-family: var(--font-sans);
   }
 }
+/* ── Page transition (react-transition-group, SwitchTransition mode="out-in") ──
+   Applied by AnimatedOutlet's <CSSTransition classNames="page">. Old page runs
+   .page-exit* then new page runs .page-enter*. Keep durations == the timeout prop. */
+.page-enter { opacity: 0; transform: translateY(8px); }
+.page-enter-active {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+.page-exit { opacity: 1; transform: translateY(0); }
+.page-exit-active {
+  opacity: 0; transform: translateY(-8px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-enter, .page-enter-active,
+  .page-exit, .page-exit-active { transition: none; transform: none; }
+}

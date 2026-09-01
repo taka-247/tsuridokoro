@@ -2,14 +2,14 @@ import { Routes, Route } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import Layout2 from './components/layout/Layout2'
 import Home from './pages/Home'
-import Contact from './pages/Contact'
+import Results from './pages/Results'
 import Profile from './pages/Profile'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import ErrorBoundary from './components/ErrorBoundary'
 
 export const globalLinks = [
   { to: '/', label: 'Home', Component: <Home /> },
-  { to: '/contact', label: 'Contact', Component: <Contact /> },
+  { to: '/results', label: 'Results', Component: <Results /> },
   { to: '/profile', label: 'Profile', Component: <Profile /> },
 ]
 export const staticLinks = [

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
-    "build": "tsc",
+    "build": "tsc && cp src/routes/aggregate/prompt.md dist/routes/aggregate/prompt.md",
     "start": "node dist/index.js",
     "test": "vitest",
     "test:ui": "vitest --ui",
@@ -17,7 +17,9 @@
   "type": "commonjs",
   "dependencies": {
     "@app/shared": "^1.0.0",
+    "@google/genai": "^2.18.0",
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1"
   },
   "devDependencies": {

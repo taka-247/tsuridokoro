@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import AnimatedOutlet from './AnimatedOutlet'
 import Header from './Header'
 import Footer from './Footer'
 import ToastContainer from '../ui/ToastContainer'
@@ -13,12 +13,12 @@ export const navItems = [
 export default function Layout() {
   return (
     <div className="flex flex-col min-h-screen">
-      <div>{/* className="flex flex-1" */}
+      <div className="flex flex-1 flex-col">
         {/* <Sidebar /> */}
         <Header className="hidden md:block" />
         {/* TECH: max width for page contents */}
-        <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-6 pb-24 sm:px-8 md:pb-8">
-          <Outlet />
+        <main className="relative mx-auto w-full max-w-6xl flex-1 px-5 py-6 pb-24 sm:px-8 md:pb-8">
+          <AnimatedOutlet />
         </main>
         <BottomTabBar className="md:hidden" />
         <ToastContainer />

@@ -1,14 +1,19 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 import type { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Shared } from '@app/shared'
+import type { AggregateResult } from '@app/shared'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import Select from '../components/ui/Select'
 import Segmented from '../components/ui/Segmented'
-import { FISH, LOOKBACK_DAYS } from '../data/regions'
+import LoadingOverlay from '../components/ui/LoadingOverlay'
+import { FISH, LOOKBACK_DAYS } from '../constants'
 import { useRegions } from '../hooks/useRegions'
 import myAxios from '../api/myAxios'
+
+const RESULTS_KEY = 'tsuridokoro:results' // §9.4
 
 type FormData = z.infer<typeof Shared.validation.aggregateSchema>
 
@@ -22,9 +27,10 @@ export default function Home() {
   } = useForm<FormData>({
     resolver: zodResolver(Shared.validation.aggregateSchema),
     mode: 'onChange',
-    defaultValues: { fish: 'ブリ', prefecture: '静岡県', city: '伊東市', lookbackDays: 3 },
+    defaultValues: { targetFish: 'ブリ', prefecture: '静岡県', city: '伊東市', lookbackDays: 3 },
   })
 
+  const navigate = useNavigate()
   const regions = useRegions()
   const prefecture = watch('prefecture')
   const prefectures = useMemo(() => (regions ? Object.keys(regions) : []), [regions])
@@ -34,14 +40,25 @@ export default function Home() {
   )
 
   async function onSubmit(data: FormData) {
-    const apiData = await myAxios.post(Shared.api.aggregate.url, data);
-    const aggregated = apiData.data
-    console.dir('aggregated')
-    console.dir(aggregated)
-    // TODO: save to SessionStorage → navigate to results
+    // isSubmitting は await 中 true のまま → LoadingOverlay が表示され操作をブロック
+    const res = await myAxios.post(Shared.api.aggregate.url, data)
+    const aggregated = res.data as AggregateResult
+
+    // §9.4: 新しい順の配列として SessionStorage に保存
+    let prev: AggregateResult[] = []
+    try {
+      prev = JSON.parse(sessionStorage.getItem(RESULTS_KEY) ?? '[]')
+    } catch {
+      prev = []
+    }
+    sessionStorage.setItem(RESULTS_KEY, JSON.stringify([aggregated, ...prev]))
+
+    navigate('/results')
   }
 
   return (
+    <>
+    <LoadingOverlay show={isSubmitting} />
     <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink via-abyss to-ink">
       {/* Sonar arcs (decorative) */}
       <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-[420px] w-[420px]">
@@ -87,7 +104,7 @@ export default function Home() {
 
           <div className="mt-6 space-y-5">
             <Controller
-              name="fish"
+              name="targetFish"
               control={control}
               render={({ field }) => (
                 <Select label="狙う魚種" value={field.value} onChange={field.onChange} options={FISH} />
@@ -156,6 +173,7 @@ export default function Home() {
         </form>
       </div>
     </div>
+    </>
   )
 }
 
