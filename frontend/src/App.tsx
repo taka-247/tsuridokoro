@@ -3,6 +3,7 @@ import Layout from './components/layout/Layout'
 import Layout2 from './components/layout/Layout2'
 import Home from './pages/Home'
 import Results from './pages/Results'
+import History from './pages/History'
 import Profile from './pages/Profile'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import ErrorBoundary from './components/ErrorBoundary'
@@ -10,12 +11,16 @@ import ErrorBoundary from './components/ErrorBoundary'
 export const globalLinks = [
   { to: '/', label: 'Home', Component: <Home /> },
   { to: '/results', label: 'Results', Component: <Results /> },
+  { to: '/history', label: 'History', Component: <History /> },
   { to: '/profile', label: 'Profile', Component: <Profile /> },
 ]
 export const staticLinks = [
   { to: '/privacy-policy', label: 'PrivacyPolicy', Component: <PrivacyPolicy /> },
 ]
 
+/**
+ * アプリサイトと静的サイトをルーティング
+ */
 export default function App() {
   return (
     <ErrorBoundary>

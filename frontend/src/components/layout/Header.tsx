@@ -1,18 +1,20 @@
 import { NavLink } from 'react-router-dom'
 import ThemeModeSwitcher from '../../components/ui/ThemeModeSwitcher'
-import FishMark from '../ui/FishMark'
-import { navItems } from './Layout'
+import MarkFish from '../ui/MarkFish'
+import { useNavItems } from './Layout'
 
 type Props = React.ComponentProps<'header'>
 
 export default function Header({ className = '', ...props }: Props) {
+  const navItems = useNavItems()
+
   return (
     <header className={`bg-gradient-to-br from-tide to-ink ${className}`} {...props}>
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:px-8">
         {/* Brand */}
         <NavLink to="/" className="flex items-center gap-3" aria-label="釣りドコロ ホーム">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-aqua/15">
-            <FishMark className="h-5 w-5 text-aqua" />
+            <MarkFish className="h-5 w-5 text-aqua" />
           </span>
           <span className="leading-tight">
             <span className="block text-lg font-bold text-white">釣りドコロ</span>

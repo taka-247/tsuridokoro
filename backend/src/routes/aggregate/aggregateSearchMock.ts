@@ -7,7 +7,7 @@ import { delay } from '../../util'
  * Gemini（Google検索グラウンディング付き）で釣果を集計し、§9.2 の形に整形して返す。
  * パース失敗・スキーマ不一致は例外を投げる（ルート側で 502 に変換）。
  */
-export async function aggregateMockSearch(input: AggregateInput): Promise<AggregateResult> {
+export async function aggregateSearchMock(input: AggregateInput): Promise<AggregateResult> {
   if (config.apiMode !== 'mock') throw new Error('apiMode is wrong')
   if (!config.apiKey) throw new Error('GEMINI_API_KEY is not set')
 
@@ -49,6 +49,18 @@ export async function aggregateMockSearch(input: AggregateInput): Promise<Aggreg
             date: '2026-08-24',
             url: 'https://example.com/mock-note-1',
           },
+          {
+            text: '釣り人が多すぎる（ダミーコメント）',
+            source: 'ダミー釣具店ブログ',
+            date: '2026-08-24',
+            url: 'https://example.com/mock-note-1',
+          },
+          {
+            text: '釣り人が多すぎる（ダミーコメント）',
+            source: 'ダミー釣具店ブログ',
+            date: '2026-08-24',
+            url: 'https://example.com/mock-note-1',
+          },
         ],
       },
       {
@@ -72,16 +84,10 @@ export async function aggregateMockSearch(input: AggregateInput): Promise<Aggreg
     otherSpots: ['富戸港', '八幡野港', '赤沢港'],
   }
 
-  console.dir('mock')
-  console.dir(mock)
-
   const result = Shared.validation.aggregateResultSchema.safeParse(mock)
   if (!result.success) {
     throw new Error(`Gemini output did not match schema: ${result.error.message}`)
   }
-
-  console.dir('result.data')
-  console.dir(result.data)
 
   // to show loading screen
   await delay(1000)

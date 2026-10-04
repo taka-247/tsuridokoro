@@ -95,6 +95,12 @@ const pages = {
   home: ''
 }
 
+const messages = {
+  error: {
+    aggregationFailed: '集計に失敗しました。時間をおいて再試行してください。',
+  }
+}
+
 export const validation = {
     contactSchema: contactSchema,
     aggregateSchema: aggregateSchema,
@@ -111,5 +117,6 @@ export const Shared = {
   api: api,
   validation: validation,
   pages: pages,
+  messages: messages,
   test: test,
 } as const

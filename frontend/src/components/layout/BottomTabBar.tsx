@@ -1,11 +1,13 @@
 // src/components/layout/BottomTabBar.tsx
 import { NavLink } from 'react-router-dom'
-import { navItems } from './Layout'
+import { useNavItems } from './Layout'
 
 type Props = React.ComponentProps<'nav'>
 
 /** Mobile bottom tab bar. Hidden on ≥sm (desktop uses the header's inline links). */
 export default function BottomTabBar({ className = '', ...props }: Props) {
+  const navItems = useNavItems()
+
   return (
     <nav
       aria-label="メインナビゲーション"
