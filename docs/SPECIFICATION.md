@@ -417,7 +417,7 @@ Renderは **自前のGit連携で自動デプロイ**（Actionsとは別系統�
 ## 14. テスト
 - フロント: Storybook のストーリーを `@storybook/addon-vitest` で Vitest 実行（headless Chromium / Playwright）。API は `msw-storybook-addon` でモック（`parameters.msw.handlers`、既定は `Shared.api.handlers`）。jsdom のテストプロジェクトは現状なし。
 - バックエンド: Vitest + Supertest（`app` に対して）。
-- E2E: Playwright（`frontend/tests/`、dev serverを自動起動）。
+- E2E: Playwright（`frontend/tests/`、dev serverを自動起動）。外部の地域マスタと `/api/aggregate` は `page.route` でモック（`tests/fixtures.ts`、フィクスチャは `aggregateResultSchema` で検証）。Gemini は呼ばない。
 - ビジュアル回帰: Storybook + Chromatic。
 - 注意: バックエンドのビルドはテストファイルを除外済（`tsconfig` の `exclude`）。集計エンドポイントのテストは Gemini 呼び出しを**モック**する。
 
@@ -443,7 +443,7 @@ Renderは **自前のGit連携で自動デプロイ**（Actionsとは別系統�
 | Profile ページ | ⏳ 雛形のみ |
 | 法務確認（引用・規約） | ⏳ 未 |
 
-**既知の問題**: `backend/src/routes/aggregate/aggregate.test.ts` が存在しない `./gemini` を import しており失敗する。フロントは型エラーが4件（`APITest.stories.tsx`・`History.tsx`・`Home.tsx`）。E2E `frontend/tests/home.spec.ts` はテンプレ由来の内容のまま。
+**既知の問題**: `backend/src/routes/aggregate/aggregate.test.ts` が存在しない `./gemini` を import しており失敗する。
 
 **次にやるべきこと**: 上記の既知の問題を解消したうえで、残タスク（ミニゲーム、コスト/レート制御、仕上げ・検証）と追加機能に着手する。詳細は [ROADMAP.md](ROADMAP.md)。
 
