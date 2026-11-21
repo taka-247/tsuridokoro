@@ -80,10 +80,8 @@ export default function Home() {
             <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/70">
               エリアと魚種を選ぶだけ。AIが最新の釣果を集めて、いま期待できる釣り場をランキングで教えます。
             </p>
-            <BoxInfo className='mt-7' Icon={InformationCircleIcon}>
-              <span className="font-bold text-white">ANGLERS・X・Instagram・釣具店のブログ</span>
-              など、公開の釣果情報をまとめて分析します。
-            </BoxInfo>
+            <BoxInfo className='mt-7' text={<><span className="font-bold text-white">ANGLERS・X・Instagram・釣具店のブログ</span>
+              など、公開の釣果情報をまとめて分析します。</>} Icon={InformationCircleIcon} />
           </div>
 
           {/* ── Form card (theme-adaptive) ── */}
@@ -158,7 +156,7 @@ export default function Home() {
               icon={<DropIcon className="h-5 w-5" aria-hidden />}
               className="mt-7 flex h-14 w-full items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-aqua to-tide text-[17px] font-bold text-white shadow-lg shadow-tide/40 transition hover:brightness-105 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              集計する
+              {Shared.pages.home.buttonText}
             </Button>
           </form>
         </div>

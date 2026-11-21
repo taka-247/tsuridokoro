@@ -8,7 +8,7 @@ import type { AggregateResult } from '@app/shared'
 vi.mock('./gemini', () => ({
   aggregateSearch: vi.fn(),
 }))
-import { aggregateSearch } from './gemini'
+import { aggregateSearch } from './aggregateSearch'
 
 const validBody = {
   targetFish: 'ブリ',

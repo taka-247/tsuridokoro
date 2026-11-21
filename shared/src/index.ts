@@ -82,7 +82,9 @@ const aggregateResultSchema = z.object({
 })
 
 const pages = {
-  home: ''
+  home: {
+    buttonText: '集計する',
+  }
 }
 
 const messages = {

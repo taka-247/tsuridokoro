@@ -71,7 +71,7 @@ export default function SpotCardLarge({ spot, meta }: { spot: Spot; meta: Meta }
             <DailyChart data={spot.dailyCatchCounts} />
           </div>
           {(spot.size || spot.maxSize) && (
-            <BoxInfo text={`↔ 釣れているサイズ：${spot.size}${spot.maxSize && ` 最大 ${spot.maxSize}`}`} className='mt-7' />
+            <BoxInfo text={<>{`↔ 釣れているサイズ：${spot.size}${spot.maxSize && ` 最大 ${spot.maxSize}`}`}</>} className='mt-7' />
           )}
 
         </div>
